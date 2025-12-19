@@ -1,37 +1,29 @@
-/* Terminal Style - AI Native Hiring */
+/* AI Native Hiring Terminal v3.0 - Fun Edition */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: local('JetBrains Mono'), local('Fira Code'), local('Monaco'), local('Consolas');
-}
-
 :root {
     --bg-color: #0a0a0a;
     --text-color: #00ff41;
-    --text-dim: #00aa2a;
     --prompt-color: #00d4ff;
     --error-color: #ff3366;
-    --warning-color: #ffcc00;
-    --cursor-color: #00ff41;
-    --selection-bg: #00ff4133;
+    --disco-color: #ff0080;
 }
 
 html, body {
     height: 100%;
-    background-color: var(--bg-color);
-    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    background: var(--bg-color);
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--text-color);
     overflow: hidden;
 }
 
-/* Scanline effect */
+/* 扫描线效果 */
 body::before {
     content: "";
     position: fixed;
@@ -41,8 +33,8 @@ body::before {
     height: 100%;
     background: repeating-linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
         transparent 1px,
         transparent 2px
     );
@@ -50,99 +42,81 @@ body::before {
     z-index: 1000;
 }
 
-/* CRT glow effect */
-body::after {
+/* 蹦迪模式 */
+body.disco {
+    animation: disco-bg 0.5s infinite;
+}
+
+body.disco::after {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(
-        ellipse at center,
-        transparent 0%,
-        rgba(0, 0, 0, 0.3) 100%
-    );
+    background: radial-gradient(circle at center, transparent 0%, var(--disco-color) 100%);
+    opacity: 0.1;
     pointer-events: none;
     z-index: 999;
+    animation: disco-pulse 0.5s infinite;
+}
+
+@keyframes disco-bg {
+    0%, 100% { background: #0a0a0a; }
+    50% { background: #1a0a1a; }
+}
+
+@keyframes disco-pulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
 }
 
 #terminal {
     height: 100%;
     padding: 20px;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 #output {
-    flex-grow: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.line {
+    margin-bottom: 3px;
     white-space: pre-wrap;
     word-wrap: break-word;
-}
-
-#output .line {
-    margin-bottom: 2px;
-}
-
-#output .prompt-text {
-    color: var(--prompt-color);
-}
-
-#output .command-text {
-    color: var(--text-color);
-}
-
-#output .error {
-    color: var(--error-color);
-}
-
-#output .warning {
-    color: var(--warning-color);
-}
-
-#output .dim {
-    color: var(--text-dim);
-}
-
-#output .highlight {
-    color: #ff00ff;
-    text-shadow: 0 0 10px #ff00ff;
-}
-
-#output .success {
-    color: #00ff88;
-}
-
-#output .ascii-art {
-    color: var(--prompt-color);
-    text-shadow: 0 0 5px var(--prompt-color);
 }
 
 #input-line {
     display: flex;
     align-items: center;
-    margin-top: 5px;
+    padding: 10px 0;
+    border-top: 1px solid #333;
 }
 
 #prompt {
     color: var(--prompt-color);
-    white-space: nowrap;
+    margin-right: 10px;
+    text-shadow: 0 0 10px var(--prompt-color);
 }
 
 #command-input {
+    flex: 1;
     background: transparent;
     border: none;
     outline: none;
     color: var(--text-color);
     font-family: inherit;
     font-size: inherit;
-    flex-grow: 1;
-    caret-color: transparent;
+    caret-color: var(--text-color);
 }
 
 #cursor {
-    color: var(--cursor-color);
+    color: var(--text-color);
     animation: blink 1s step-end infinite;
 }
 
@@ -151,105 +125,121 @@ body::after {
     50% { opacity: 0; }
 }
 
-/* Selection style */
-::selection {
-    background: var(--selection-bg);
-    color: var(--text-color);
+/* 文字样式 */
+.highlight {
+    color: #00ff41;
+    text-shadow: 0 0 5px #00ff41;
 }
 
-/* File colors */
-.file-executable {
-    color: #00ff88;
+.error {
+    color: #ff3366;
 }
 
-.file-hidden {
-    color: #888888;
+.dim {
+    color: #666;
 }
 
-.file-directory {
-    color: #5555ff;
+.cmd {
+    color: #ffcc00;
     font-weight: bold;
 }
 
-.file-link {
-    color: #00ffff;
+.file {
+    color: #00d4ff;
 }
 
-/* Matrix rain effect (optional, triggered by secret command) */
-.matrix-rain {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 998;
+.prompt {
+    color: var(--prompt-color);
 }
 
-/* Glitch effect for special moments */
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-}
-
-.glitch {
-    animation: glitch 0.3s ease-in-out;
-}
-
-/* Rainbow text animation */
-@keyframes rainbow {
-    0% { color: #ff0000; }
-    14% { color: #ff7f00; }
-    28% { color: #ffff00; }
-    42% { color: #00ff00; }
-    57% { color: #0000ff; }
-    71% { color: #4b0082; }
-    85% { color: #9400d3; }
-    100% { color: #ff0000; }
-}
-
+/* 彩虹动画 */
 .rainbow {
     animation: rainbow 2s linear infinite;
-    text-shadow: 0 0 10px currentColor;
+    font-weight: bold;
 }
 
-/* Success glow */
-#output .success {
+@keyframes rainbow {
+    0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+    14% { color: #ff7700; text-shadow: 0 0 10px #ff7700; }
+    28% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
+    42% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+    57% { color: #0077ff; text-shadow: 0 0 10px #0077ff; }
+    71% { color: #8800ff; text-shadow: 0 0 10px #8800ff; }
+    85% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+    100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+}
+
+/* 成功效果 */
+.success {
     color: #00ff88;
-    text-shadow: 0 0 5px #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* Loading animation */
-.loading::after {
-    content: '';
-    animation: dots 1.5s steps(4, end) infinite;
+/* 霓虹发光 */
+.neon-glow {
+    text-shadow:
+        0 0 5px #00ff88,
+        0 0 10px #00ff88,
+        0 0 20px #00ff88,
+        0 0 40px #00ff88;
+    animation: neon-pulse 1.5s ease-in-out infinite;
 }
 
-@keyframes dots {
-    0% { content: ''; }
-    25% { content: '.'; }
-    50% { content: '..'; }
-    75% { content: '...'; }
-    100% { content: ''; }
+@keyframes neon-pulse {
+    0%, 100% {
+        text-shadow:
+            0 0 5px #00ff88,
+            0 0 10px #00ff88,
+            0 0 20px #00ff88;
+    }
+    50% {
+        text-shadow:
+            0 0 10px #00ff88,
+            0 0 20px #00ff88,
+            0 0 40px #00ff88,
+            0 0 80px #00ff88;
+    }
 }
 
-/* Typing effect */
-.typing {
-    overflow: hidden;
-    border-right: 2px solid var(--cursor-color);
-    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+/* ASCII艺术 */
+.ascii-art {
+    font-size: 12px;
+    line-height: 1.2;
 }
 
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+/* 钢琴键显示 */
+.piano-keys {
+    font-family: monospace;
+    background: linear-gradient(180deg, #333 0%, #111 100%);
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 10px 0;
+    border: 2px solid #444;
+    text-shadow: 0 0 5px currentColor;
 }
 
-/* Responsive */
+/* 滚动条 */
+#output::-webkit-scrollbar {
+    width: 8px;
+}
+
+#output::-webkit-scrollbar-track {
+    background: #111;
+}
+
+#output::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+#output::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+/* 响应式 */
 @media (max-width: 600px) {
     body {
         font-size: 12px;
@@ -258,4 +248,44 @@ body::after {
     #terminal {
         padding: 10px;
     }
+
+    .ascii-art {
+        font-size: 8px;
+    }
+}
+
+/* 打字动画 */
+.typing-line {
+    overflow: hidden;
+    border-right: 2px solid var(--text-color);
+    animation: typing-cursor 0.5s step-end infinite;
+}
+
+@keyframes typing-cursor {
+    0%, 100% { border-color: var(--text-color); }
+    50% { border-color: transparent; }
+}
+
+/* 粒子画布已在JS中处理 */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+/* 选择样式 */
+::selection {
+    background: rgba(0, 255, 65, 0.3);
+    color: #fff;
+}
+
+/* 链接样式 */
+a {
+    color: var(--prompt-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
