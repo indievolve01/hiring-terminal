@@ -200,6 +200,29 @@ body::after {
     animation: glitch 0.3s ease-in-out;
 }
 
+/* Rainbow text animation */
+@keyframes rainbow {
+    0% { color: #ff0000; }
+    14% { color: #ff7f00; }
+    28% { color: #ffff00; }
+    42% { color: #00ff00; }
+    57% { color: #0000ff; }
+    71% { color: #4b0082; }
+    85% { color: #9400d3; }
+    100% { color: #ff0000; }
+}
+
+.rainbow {
+    animation: rainbow 2s linear infinite;
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Success glow */
+#output .success {
+    color: #00ff88;
+    text-shadow: 0 0 5px #00ff88;
+}
+
 /* Loading animation */
 .loading::after {
     content: '';
