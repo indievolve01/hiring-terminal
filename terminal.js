@@ -82,12 +82,13 @@ function createNoteParticle(note) {
     const x = Math.random() * window.innerWidth;
     const y = window.innerHeight - 100;
 
-    for (let i = 0; i < 15; i++) {
+    // 减少粒子数量以提高性能
+    for (let i = 0; i < 8; i++) {
         particles.push({
             x, y,
             vx: (Math.random() - 0.5) * 10,
             vy: -Math.random() * 15 - 5,
-            size: Math.random() * 8 + 4,
+            size: Math.random() * 6 + 3,
             color: colors[Math.floor(Math.random() * colors.length)],
             alpha: 1,
             note: note.toUpperCase()
@@ -100,15 +101,16 @@ function createSuccessExplosion() {
     const centerY = window.innerHeight / 2;
     const colors = ['#00ff00', '#00ff80', '#80ff00', '#ffff00', '#00ffff'];
 
-    for (let i = 0; i < 100; i++) {
-        const angle = (Math.PI * 2 / 100) * i;
-        const speed = Math.random() * 15 + 5;
+    // 减少粒子数量以提高性能
+    for (let i = 0; i < 50; i++) {
+        const angle = (Math.PI * 2 / 50) * i;
+        const speed = Math.random() * 12 + 4;
         particles.push({
             x: centerX,
             y: centerY,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
-            size: Math.random() * 10 + 5,
+            size: Math.random() * 8 + 4,
             color: colors[Math.floor(Math.random() * colors.length)],
             alpha: 1
         });
@@ -121,14 +123,15 @@ function createSuccessExplosion() {
 function createFirework(x, y) {
     const colors = ['#ff0000', '#ff7700', '#ffff00', '#00ff00', '#00ffff', '#0077ff', '#ff00ff'];
 
-    for (let i = 0; i < 50; i++) {
-        const angle = (Math.PI * 2 / 50) * i;
-        const speed = Math.random() * 8 + 3;
+    // 减少粒子数量以提高性能
+    for (let i = 0; i < 30; i++) {
+        const angle = (Math.PI * 2 / 30) * i;
+        const speed = Math.random() * 7 + 3;
         particles.push({
             x, y,
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
-            size: Math.random() * 5 + 2,
+            size: Math.random() * 4 + 2,
             color: colors[Math.floor(Math.random() * colors.length)],
             alpha: 1
         });
@@ -246,7 +249,7 @@ Python / TypeScript / AI / LLM
     'apply': `
 📧 如何申请：
 
-邮箱: hiring@ai-native.com
+邮箱: team@indievolve.com
 主题: [求职] 我找到了彩蛋！
 
 附上：
@@ -416,9 +419,9 @@ const commands = {
 ║                                                           ║
 ║   你的专属代码:                                           ║
 ║                                                           ║
-║   ✨  AINATIVE-FUN-2024-MAGIC  ✨                         ║
+║   ✨  AI-NATIVE-WINNER-2025  ✨                           ║
 ║                                                           ║
-║   把这个代码发到 hiring@ai-native.com                     ║
+║   把这个代码发到 team@indievolve.com                      ║
 ║   直接获得面试机会！                                      ║
 ║                                                           ║
 ╚═══════════════════════════════════════════════════════════╝
@@ -427,7 +430,7 @@ const commands = {
 <span class="dim">你展示了探索精神，这正是我们需要的！</span>
 `;
         }
-        return '<span class="rainbow">你已经找到彩蛋啦！代码是: AINATIVE-FUN-2024-MAGIC</span>';
+        return '<span class="rainbow">你已经找到彩蛋啦！代码是: AI-NATIVE-WINNER-2025</span>';
     },
 
     secret: () => files['secret'],
@@ -635,9 +638,10 @@ function checkMelody(note) {
 ╔═══════════════════════════════════════════════════════════╗
 ║   🎹 你弹出了完美的音阶！                                 ║
 ║                                                           ║
-║   彩蛋代码: AINATIVE-PIANO-2024-MUSIC                     ║
+║   彩蛋代码: AI-NATIVE-WINNER-2025                         ║
 ║                                                           ║
 ║   你不仅会探索，还有音乐天赋！                            ║
+║   发送到: team@indievolve.com                             ║
 ╚═══════════════════════════════════════════════════════════╝
 </span>`);
     }
