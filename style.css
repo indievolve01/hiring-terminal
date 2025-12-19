@@ -1,0 +1,238 @@
+/* Terminal Style - AI Native Hiring */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local('JetBrains Mono'), local('Fira Code'), local('Monaco'), local('Consolas');
+}
+
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #00ff41;
+    --text-dim: #00aa2a;
+    --prompt-color: #00d4ff;
+    --error-color: #ff3366;
+    --warning-color: #ffcc00;
+    --cursor-color: #00ff41;
+    --selection-bg: #00ff4133;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--bg-color);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+/* Scanline effect */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* CRT glow effect */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    pointer-events: none;
+    z-index: 999;
+}
+
+#terminal {
+    height: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#output {
+    flex-grow: 1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#output .line {
+    margin-bottom: 2px;
+}
+
+#output .prompt-text {
+    color: var(--prompt-color);
+}
+
+#output .command-text {
+    color: var(--text-color);
+}
+
+#output .error {
+    color: var(--error-color);
+}
+
+#output .warning {
+    color: var(--warning-color);
+}
+
+#output .dim {
+    color: var(--text-dim);
+}
+
+#output .highlight {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+#output .success {
+    color: #00ff88;
+}
+
+#output .ascii-art {
+    color: var(--prompt-color);
+    text-shadow: 0 0 5px var(--prompt-color);
+}
+
+#input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#prompt {
+    color: var(--prompt-color);
+    white-space: nowrap;
+}
+
+#command-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: inherit;
+    flex-grow: 1;
+    caret-color: transparent;
+}
+
+#cursor {
+    color: var(--cursor-color);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Selection style */
+::selection {
+    background: var(--selection-bg);
+    color: var(--text-color);
+}
+
+/* File colors */
+.file-executable {
+    color: #00ff88;
+}
+
+.file-hidden {
+    color: #888888;
+}
+
+.file-directory {
+    color: #5555ff;
+    font-weight: bold;
+}
+
+.file-link {
+    color: #00ffff;
+}
+
+/* Matrix rain effect (optional, triggered by secret command) */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 998;
+}
+
+/* Glitch effect for special moments */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.glitch {
+    animation: glitch 0.3s ease-in-out;
+}
+
+/* Loading animation */
+.loading::after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+    100% { content: ''; }
+}
+
+/* Typing effect */
+.typing {
+    overflow: hidden;
+    border-right: 2px solid var(--cursor-color);
+    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        font-size: 12px;
+    }
+
+    #terminal {
+        padding: 10px;
+    }
+}
